@@ -15,5 +15,10 @@ CMD ["python", "-m", "flask", "--app", "loan_status_predict", "run" ,"--host=0.0
 
 
 #Commands for terminal
-# docker images ---> docker build -t loan_app . ----> if any error is there check in docker container folder and run , there we can get the link if it
-#is not working then change the terminal  ---> docker run -p 8000:5000 -d loan_app
+# how to create docker images ---> "docker build -t loan_app ."----> if any error is there check in docker container folder and run , there we can get the link if it
+#is not working then change the terminal  ---> "docker run -p 8000:5000 -d loan_app"
+# 1)docker build -t loan_app .
+# 2) docker images
+# 3) docker run -d loan_app  , after this command go to docker image section and a link will be generate
+# if that link is not openable try to change the link in terminal of pycharm "docker run -p 8000:5000 -d loan_app"
+# Here loan_app is the name given
