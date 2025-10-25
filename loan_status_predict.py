@@ -12,6 +12,10 @@ clf = pickle.load(model_pickle)
 @app.route('/')
 def hello_ping():
     return 'Hi welcome to Loan Status Prediction'
+
+@app.route("/ping")
+def  pinger():
+    return 'Hi I am a pinger'
 @app.route('/predict', methods=['POST'])
 def prediction():
     loan_req = request.get_json()
