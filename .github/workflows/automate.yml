@@ -30,6 +30,7 @@ jobs:
      runs-on: ubuntu-latest
      environment: production
      steps:
+        - uses: actions/checkout@v5
         -  name: Configure AWS credentials
            uses: aws-actions/configure-aws-credentials@v1
            with:
@@ -49,10 +50,10 @@ jobs:
             ECR_REPOSITORY: loan_app
             #loan_app is the ECR repo name in aws
             IMAGE_TAG: ${{ github.sha }}
-          #run: |
-            #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .  
-            #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-            #echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          run: |
+            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .  
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
         - name: Fill in the new image ID in the Amazon ECS task definition
           id: task-def
