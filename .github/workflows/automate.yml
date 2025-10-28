@@ -5,21 +5,87 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - name: Set up Python 3
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.13.5
+  job1:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v5
+  #uses: actions/checkout is syntax
+        - name: Set up Python 3
+          uses: actions/setup-python@v5
+          with:
+            python-version: 3.13.5
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+            pip install pytest
+  
+
+        - name: Run tests using Pytest
+          run: pytest
+
+  job2:
+     needs: job1
+     runs-on: ubuntu-latest
+     environment: production
+     steps:
+        -  name: Configure AWS credentials
+           uses: aws-actions/configure-aws-credentials@v1
+           with:
+            aws-access-key-id: ${{ secrets.ACCESS_KEYS_AWS }}
+            # ACCESS_KEYS_AWS, ACCESS_SECRET_KEY_AWS are the variable name stored in github security and variables
+            aws-secret-access-key: ${{ secrets.ACCESS_SECRET_KEY_AWS }}
+            aws-region: us-east-1
+
+        - name: Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
+
+        - name: Build, tag, and push image to Amazon ECR
+          id: build-image
+          env:
+            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            ECR_REPOSITORY: loan_app
+            #loan_app is the ECR repo name in aws
+            IMAGE_TAG: ${{ github.sha }}
+          run: |
+            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+        - name: Fill in the new image ID in the Amazon ECS task definition
+          id: task-def
+          uses: aws-actions/amazon-ecs-render-task-definition@v1
+          with:
+            task-definition: flask_task-revision1.json
+            # flask_task-revision1.json is the file name of json. json file is downloaded from aws and then uploaded here
+            container-name: flask_container
+            #flask_container is a container name from aws
+            image: ${{ steps.build-image.outputs.image }}
+
+        - name: Deploy Amazon ECS task definition
+          uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+          with:
+            task-definition: ${{ steps.task-def.outputs.task-definition }}
+            service: flask_task-service
+            # run service in aws and copy that service name ex:- "flask_task-service"
+            cluster: loan-app-cluster-repeat
+            #loan-app-cluster-repeat is a cluster name
+            wait-for-service-stability: true
 
 
-      - name: Run tests using Pytest
-        run: pytest
+
+
+#Order of execution in Github action
+#Event -> Workflow -> Job -> Steps -> Actions
+#1) The action is triggered when an event occours.
+#2) The triggered event cause the workflow to run. The workflow contains individuals tasks which are called actions.
+#3) These actions are pre defined commands that perform specific tasks like testing code.
+#4) Each action can be further subdivided into steps. Steps contain of one or more command that are executed in order.
+
+
+# conti...
+#14) paste this as job 2 with correct indentation
+#15) store acces key id as securtiy and variables under repo settings.
+# 16) correct subject as per our naming and security key name stored in github, check above subject only
