@@ -1,0 +1,14 @@
+artifact_uri: file:///c:/Users/Rahil/OneDrive/Documents/GitHub/Web_API/mlruns/422079373624276455/6e58a9a4b19f4747bc4d80b526c96cc8/artifacts
+end_time: 1762168084076
+entry_point_name: ''
+experiment_id: '422079373624276455'
+lifecycle_stage: active
+run_id: 6e58a9a4b19f4747bc4d80b526c96cc8
+run_name: Refrence_run
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762168078089
+status: 3
+tags: []
+user_id: Rahil

@@ -1,0 +1,10 @@
+artifact_location: file:///c:/Users/Rahil/OneDrive/Documents/GitHub/Web_API/mlruns/422079373624276455/models/m-b91aaca2e0c24d50a2eb63f6ecd3eb06/artifacts
+creation_timestamp: 1762168078139
+experiment_id: '422079373624276455'
+last_updated_timestamp: 1762168084064
+model_id: m-b91aaca2e0c24d50a2eb63f6ecd3eb06
+model_type: null
+name: regres_model
+source_run_id: 6e58a9a4b19f4747bc4d80b526c96cc8
+status: 2
+status_message: null
