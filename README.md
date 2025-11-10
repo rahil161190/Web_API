@@ -1,3 +1,5 @@
+Main model :- [https://github.com/rahil161190/Loantap-Logistic-Regression.git]
+
 # End-to-End ML Model Deployment on AWS 🚀
 
 This project demonstrates how to deploy a Machine Learning model using AWS services, starting from building a **Web API** to full **CI/CD automation with GitHub Actions and ECS**.
