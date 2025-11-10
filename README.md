@@ -1,4 +1,4 @@
-Main model :- [https://github.com/rahil161190/Loantap-Logistic-Regression.git]
+Main machine learning model for Loantap:- [https://github.com/rahil161190/Loantap-Logistic-Regression.git]
 
 # End-to-End ML Model Deployment on AWS 🚀
 
