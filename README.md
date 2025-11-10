@@ -57,10 +57,3 @@ This project demonstrates how to deploy a Machine Learning model using AWS servi
 - Production-ready workflow with **automated builds, tests, and deployments**  
 
 ---
-
-## ▶️ Future Improvements
-- Add **Docker Compose** for multi-container setups  
-- Integrate **monitoring/logging** (CloudWatch)  
-- Extend CI/CD with **blue/green deployments**  
-
-
