@@ -1,4 +1,87 @@
-Main machine learning model for Loantap:- [https://github.com/rahil161190/Loantap-Logistic-Regression.git]
+Main machine learning model for Loantap:- 
+# LoanTap Credit-Risk Pipeline 💳
+
+An end-to-end proof-of-concept for predicting loan defaults using **Logistic Regression, SMOTE, and class-weighting**.
+
+---
+
+## 🚀 Project Overview
+- Built a binary classifier to flag **“Charged Off”** loans vs **“Fully Paid.”**
+- 370K+ cleaned records, 22 engineered features (borrower profile, credit history, loan terms).
+- Tackled severe class imbalance (80:20) with **SMOTE & custom weights**.
+- Tuned for **F1-score on defaulters (minority class)** rather than raw accuracy.
+
+---
+
+## 🛠️ Tech Stack
+- Python  
+- pandas  
+- scikit-learn  
+- imbalanced-learn  
+- category_encoders  
+- statsmodels  
+- seaborn  
+- matplotlib  
+
+---
+
+## 📊 Key Steps
+### Cleaning & Imputation
+- Mode-fill and binarize `mort_acc`  
+- Drop high-cardinality/text columns (`emp_title`, `address`, etc.)
+
+### Feature Engineering
+- Label & target encoding (`term`, `grade`, `purpose`)  
+- Extract `issue_month`, `issue_year`, `credit_age_years`
+
+### Collinearity Control
+- VIF analysis → removed `loan_amnt` (collinear with `installment`)
+
+### Modeling & Tuning
+- Baseline logistic regression → **F1(defaulter)=0.13**  
+- +Class weights & SMOTE → **F1=0.42**  
+- Threshold sweep & PR-AUC evaluation
+
+### Evaluation
+- Precision-recall curves  
+- Confusion matrices  
+- Test-set validation  
+
+---
+
+## 📈 Results
+- **Defaulter F1:** 0.13 → 0.42 (+223%)  
+- **Recall:** 0.08 → 0.64 (majority of defaulters caught)  
+- **Precision:** 0.53 → 0.31 (trade-off for higher recall)  
+- **PR-AUC:** ~0.36 before & after balancing (reflects minority performance)  
+
+---
+
+## 🔍 Business Insights & Conclusions
+- **High-risk segments:** 60-month terms, grades E–G, high DTI, high interest  
+- Higher open-account counts correlate with default  
+- **Strongest predictor:** Loan grade  
+- **Metric choice:** F1-score & recall matter most for NPA control  
+- AUROC alone is misleading under imbalance  
+
+---
+
+## 🎯 Actionable Recommendations
+- Refine underwriting rules:
+  - Stricter approval or higher rates for 60-month loans  
+  - Tighter DTI and loan-amount caps on E–G grades  
+- Monitor key flags:
+  - Any public record → automatic manual review  
+  - Small-business purpose → require extra collateral  
+- Operationalize model:
+  - Deploy with a 0.5 threshold for balanced F1  
+  - Regularly retrain as economic conditions shift  
+- Enhance data sources:
+  - Add transaction histories, geo-demographics, alternative credit data  
+- Cost-benefit analysis:
+  - Quantify cost of false positives vs false negatives to set business threshold  
+
+---
 
 # End-to-End ML Model Deployment on AWS 🚀
 
