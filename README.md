@@ -1,4 +1,4 @@
-Main machine learning model for Loantap:- 
+Main machine learning model for Loantap with file name "LoanTap_LogisticRegression(Rahil)"
 # LoanTap Credit-Risk Pipeline 💳
 
 An end-to-end proof-of-concept for predicting loan defaults using **Logistic Regression, SMOTE, and class-weighting**.
